@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    <html>
+    <body>
+      {% if user.is_authenticated %}
+      <h2> Welcome, {{ user.email }}. </h2>
+      <p>You have successfully logged in. <a href='/info/'>You may
+	  now register your device's address. </a>
+      </p>
+      <p> Below the logout button is just a dump of the information available
+	from the CoManage/InCommon login. We just put it here so you
+	can see what's in the data that comes back from CoManage.
+	You'll probably find
+	"user.email" to be the most useful. <p>
+	
+        <br>
+        <a href="{% url 'logout' %}">
+            <button type="button">
+                Logout
+            </button>
+        </a>
+	<br>
+	<br>
+
+        <h2>Your information:</h2>
+        <h3>CILogon Authentication Claims</h3>
+        <table border="1px solid black" cellpadding="5px" width="100%">
+            <tr>
+                <td>name</td>
+                <td><b>{{ user.name }}</b></td>
+            </tr>
+            <tr>
+                <td>email</td>
+                <td><b>{{ user.email }}</b></td>
+            </tr>
+            <tr>
+                <td>given_name</td>
+                <td><b>{{ user.first_name }}</b></td>
+            </tr>
+            <tr>
+                <td>family_name</td>
+                <td><b>{{ user.last_name }}</b></td>
+            </tr>
+            <tr>
+                <td>idp</td>
+                <td><b>{{ user.idp }}</b></td>
+            </tr>
+            <tr>
+                <td>idp_name</td>
+                <td><b>{{ user.idp_name }}</b></td>
+            </tr>
+            <tr>
+                <td>sub</td>
+                <td><b>{{ user.sub }}</b></td>
+            </tr>
+            <tr>
+                <td>aud</td>
+                <td><b>{{ user.aud }}</b></td>
+            </tr>
+            <tr>
+                <td>cert_subject_dn</td>
+                <td><b>{{ user.cert_subject_dn }}</b></td>
+            </tr>
+            <tr>
+                <td>iss</td>
+                <td><b>{{ user.iss }}</b></td>
+            </tr>
+            <tr>
+                <td>oidc</td>
+                <td><b>{{ user.oidc }}</b></td>
+            </tr>
+            <tr>
+                <td>eppn</td>
+                <td><b>{{ user.eppn }}</b></td>
+            </tr>
+            <tr>
+                <td>eptid</td>
+                <td><b>{{ user.eptid }}</b></td>
+            </tr>
+            <tr>
+                <td>acr</td>
+                <td><b>{{ user.acr }}</b></td>
+            </tr>
+            <tr>
+                <td>affiliation</td>
+                <td><b>{{ user.affiliation }}</b></td>
+            </tr>
+        </table>
+        {% if isMemberOf %}
+            <h3>COManage Authorization: isMemberOf</h3>
+            <table border="1px solid black" cellpadding="5px" width="100%">
+                {% for group in isMemberOf %}
+                    <tr>
+                        <td>{{ group.attribute }}</td>
+                        <td><b>{{ group.value }}</b></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+        {% if LDAPOther %}
+            <h3>COManage Authorization: other attributes</h3>
+            <table border="1px solid black" cellpadding="5px" width="100%">
+                {% for group in LDAPOther %}
+                    <tr>
+                        <td>{{ group.attribute }}</td>
+                        <td><b>{{ group.value }}</b></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+    {% else %}
+        <h2>Authenticate with:</h2>
+
+        <div style="border: 5px outset #696; cursor:pointer; padding:3px;
+display:inline-block;" onclick="location.href='https://cilogon.org'">
+            <button type="button">
+                <a href="{% url 'oidc_authentication_init' %}"
+                   style="font-family:Arial,sans-serif; font-style:italic;
+font-weight:bold; font-size:28px; color:#363;
+text-decoration:none;">
+                    <img alt=""
+                         src="https://cilogon.org/images/cilogon-logo-32x32.png"
+                         style="vertical-align:middle"/>
+                    CILogon 2.0 / COmanage
+                </a>
+            </button>
+        </div>
+
+    {% endif %}
+    </body>
+    </html>
+{% endblock %}

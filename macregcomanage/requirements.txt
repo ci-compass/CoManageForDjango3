@@ -1,0 +1,7 @@
+Django
+ldap3
+mozilla-django-oidc
+psycopg2-binary
+python-dotenv
+pytz
+uWSGI
