@@ -1,4 +1,4 @@
-# (Very) Minimal Example of using CoManage to provide InCommon authentication for Django-based Web Applications***
+# (Very) Minimal Example of using CoManage to provide InCommon authentication for Django-based Web Applications
 
 Here you will find three directories, each with a more progressively built-out application. The application itself
 is trivially simple - it asks the user for their MAC address and stores it in a database table for later use.
